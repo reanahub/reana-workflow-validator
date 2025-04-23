@@ -1,20 +1,16 @@
 # This file is part of REANA.
-# Copyright (C) 2024 CERN.
+# Copyright (C) 2024, 2025 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 name: CI
 
-on:
-  push:
-  pull_request:
-  schedule:
-    - cron: '0 7 * * 1'
+on: [push, pull_request]
 
 jobs:
   lint-commitlint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,7 +36,7 @@ jobs:
           ./run-tests.sh --check-commitlint ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} ${{ github.event.pull_request.head.sha }} ${{ github.event.pull_request.number }}
 
   lint-shellcheck:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
