@@ -9,6 +9,10 @@
 set -o errexit
 set -o nounset
 
+docker_build() {
+    docker build -t docker.io/reanahub/reana-workflow-validator .
+}
+
 format_prettier() {
     prettier -c .
 }
@@ -55,6 +59,10 @@ lint_commitlint() {
     fi
 }
 
+lint_hadolint() {
+    docker run -i --rm docker.io/hadolint/hadolint:v2.12.0 <Dockerfile
+}
+
 lint_markdownlint() {
     markdownlint-cli2 "**/*.md"
 }
@@ -67,26 +75,36 @@ lint_yamllint() {
     yamllint .
 }
 
+python_tests() {
+    pytest
+}
+
 all() {
+    docker_build
     format_prettier
     format_shfmt
     lint_commitlint
+    lint_hadolint
     lint_markdownlint
     lint_shellcheck
     lint_yamllint
+    python_tests
 }
 
 help() {
     echo "Usage: $0 [options]"
     echo "Options:"
     echo "  --all                Perform all checks [default]"
+    echo "  --docker-build       Check Docker build"
     echo "  --format-prettier    Check formatting of Markdown etc files"
     echo "  --format-shfmt       Check formatting of shell scripts"
     echo "  --help               Display this help message"
     echo "  --lint-commitlint    Check linting of commit messages"
+    echo "  --lint-hadolint      Check linting of Dockerfiles"
     echo "  --lint-markdownlint  Check linting of Markdown files"
     echo "  --lint-shellcheck    Check linting of shell scripts"
     echo "  --lint-yamllint      Check linting of YAML files"
+    echo "  --python-tests       Run Python test suite"
 }
 
 if [ $# -eq 0 ]; then
@@ -98,11 +116,14 @@ arg="$1"
 case $arg in
 --all) all ;;
 --help) help ;;
+--docker-build) docker_build ;;
 --format-prettier) format_prettier ;;
 --format-shfmt) format_shfmt ;;
 --lint-commitlint) lint_commitlint "$@" ;;
+--lint-hadolint) lint_hadolint ;;
 --lint-markdownlint) lint_markdownlint ;;
 --lint-shellcheck) lint_shellcheck ;;
 --lint-yamllint) lint_yamllint ;;
+--python-tests) python_tests ;;
 *) echo "[ERROR] Invalid argument '$arg'. Exiting." && help && exit 1 ;;
 esac
