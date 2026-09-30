@@ -71,6 +71,10 @@ lint_hadolint() {
     docker run -i --rm docker.io/hadolint/hadolint:v2.12.0 <Dockerfile
 }
 
+lint_jsonlint() {
+    find . -name "*.json" -exec jsonlint -q {} \+
+}
+
 lint_markdownlint() {
     markdownlint-cli2 "**/*.md"
 }
@@ -99,6 +103,7 @@ all() {
     lint_commitlint
     lint_flake8
     lint_hadolint
+    lint_jsonlint
     lint_markdownlint
     lint_pydocstyle
     lint_shellcheck
@@ -118,6 +123,7 @@ help() {
     echo "  --lint-commitlint    Check linting of commit messages"
     echo "  --lint-flake8        Check linting of Python files"
     echo "  --lint-hadolint      Check linting of Dockerfiles"
+    echo "  --lint-jsonlint      Check linting of JSON files"
     echo "  --lint-markdownlint  Check linting of Markdown files"
     echo "  --lint-pydocstyle    Check linting of Python docstrings"
     echo "  --lint-shellcheck    Check linting of shell scripts"
@@ -141,6 +147,7 @@ case $arg in
 --lint-commitlint) lint_commitlint "$@" ;;
 --lint-flake8) lint_flake8 ;;
 --lint-hadolint) lint_hadolint ;;
+--lint-jsonlint) lint_jsonlint ;;
 --lint-markdownlint) lint_markdownlint ;;
 --lint-pydocstyle) lint_pydocstyle ;;
 --lint-shellcheck) lint_shellcheck ;;
