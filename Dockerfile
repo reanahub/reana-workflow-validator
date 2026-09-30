@@ -62,3 +62,15 @@ RUN userdel -r ubuntu && \
 USER reana
 
 ENTRYPOINT ["reana-validate-spec"]
+
+LABEL org.opencontainers.image.authors="team@reanahub.io"
+LABEL org.opencontainers.image.created="2026-09-30"
+LABEL org.opencontainers.image.description="REANA reproducible analysis platform - workflow validator component"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.source="https://github.com/reanahub/reana-workflow-validator"
+LABEL org.opencontainers.image.title="reana-workflow-validator"
+LABEL org.opencontainers.image.url="https://github.com/reanahub/reana-workflow-validator"
+LABEL org.opencontainers.image.vendor="reanahub"
+# x-release-please-start-version
+LABEL org.opencontainers.image.version="0.95.0-alpha.1"
+# x-release-please-end
