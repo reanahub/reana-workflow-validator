@@ -63,6 +63,10 @@ lint_commitlint() {
     fi
 }
 
+lint_flake8() {
+    flake8 .
+}
+
 lint_hadolint() {
     docker run -i --rm docker.io/hadolint/hadolint:v2.12.0 <Dockerfile
 }
@@ -89,6 +93,7 @@ all() {
     format_prettier
     format_shfmt
     lint_commitlint
+    lint_flake8
     lint_hadolint
     lint_markdownlint
     lint_shellcheck
@@ -106,6 +111,7 @@ help() {
     echo "  --format-shfmt       Check formatting of shell scripts"
     echo "  --help               Display this help message"
     echo "  --lint-commitlint    Check linting of commit messages"
+    echo "  --lint-flake8        Check linting of Python files"
     echo "  --lint-hadolint      Check linting of Dockerfiles"
     echo "  --lint-markdownlint  Check linting of Markdown files"
     echo "  --lint-shellcheck    Check linting of shell scripts"
@@ -127,6 +133,7 @@ case $arg in
 --format-prettier) format_prettier ;;
 --format-shfmt) format_shfmt ;;
 --lint-commitlint) lint_commitlint "$@" ;;
+--lint-flake8) lint_flake8 ;;
 --lint-hadolint) lint_hadolint ;;
 --lint-markdownlint) lint_markdownlint ;;
 --lint-shellcheck) lint_shellcheck ;;

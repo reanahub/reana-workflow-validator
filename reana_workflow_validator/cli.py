@@ -61,7 +61,7 @@ from reana_workflow_validator.config import (
 )
 
 
-def _prepare_workdir(input_dir, work_dir):
+def _prepare_workdir(input_dir, work_dir):  # noqa: C901
     """Copy the read-only bundle into a writable workdir and return its path.
 
     Loading Snakemake/CWL workflows writes scratch files next to the workflow,
