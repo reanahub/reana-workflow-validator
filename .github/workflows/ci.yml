@@ -18,6 +18,23 @@ jobs:
       - name: Build Docker image
         run: ./run-tests.sh --docker-build
 
+  format-black:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check Python code formatting
+        run: |
+          pip install --upgrade pip
+          pip install black
+          ./run-tests.sh --format-black
+
   format-prettier:
     runs-on: ubuntu-24.04
     steps:
