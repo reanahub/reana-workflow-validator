@@ -16,6 +16,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Allow pip to install packages in the system site-packages dir
 ENV PIP_BREAK_SYSTEM_PACKAGES=true
 
+# Prepare list of Python dependencies
+COPY requirements.txt /code/
+
 # Install the system Python toolchain and validator dependencies:
 # - nodejs: required by cwltool to evaluate CWL InlineJavascript expressions
 # - git: yadage may resolve workflow references via git
@@ -30,6 +33,9 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install the pinned validator and workflow-engine dependencies
+RUN pip install --no-cache-dir -r /code/requirements.txt
+
 # Install the validator and all workflow engines.
 # When building inside the REANA monorepo the reana-commons submodule is present
 # under modules/; otherwise install reana-commons from PyPI via install_requires.
@@ -42,7 +48,8 @@ COPY . /code
 RUN if test -e modules/reana-commons; then \
       pip install --no-cache-dir "modules/reana-commons[cwl,snakemake,yadage]" --upgrade; \
     fi && \
-    pip install --no-cache-dir .
+    pip install --no-cache-dir . && \
+    pip check
 
 # The read-only bundle is mounted here by reana-workflow-controller.
 ENV REANA_VALIDATION_INPUT_DIR=/validation/input

@@ -126,6 +126,23 @@ jobs:
           npm install jsonlint --global
           ./run-tests.sh --lint-jsonlint
 
+  lint-manifest:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check Python manifest completeness
+        run: |
+          pip install --upgrade pip
+          pip install check-manifest
+          ./run-tests.sh --lint-manifest
+
   lint-markdownlint:
     runs-on: ubuntu-24.04
     steps:

@@ -75,6 +75,10 @@ lint_jsonlint() {
     find . -name "*.json" -exec jsonlint -q {} \+
 }
 
+lint_manifest() {
+    check-manifest
+}
+
 lint_markdownlint() {
     markdownlint-cli2 "**/*.md"
 }
@@ -104,6 +108,7 @@ all() {
     lint_flake8
     lint_hadolint
     lint_jsonlint
+    lint_manifest
     lint_markdownlint
     lint_pydocstyle
     lint_shellcheck
@@ -124,6 +129,7 @@ help() {
     echo "  --lint-flake8        Check linting of Python files"
     echo "  --lint-hadolint      Check linting of Dockerfiles"
     echo "  --lint-jsonlint      Check linting of JSON files"
+    echo "  --lint-manifest      Check completeness of Python manifest"
     echo "  --lint-markdownlint  Check linting of Markdown files"
     echo "  --lint-pydocstyle    Check linting of Python docstrings"
     echo "  --lint-shellcheck    Check linting of shell scripts"
@@ -148,6 +154,7 @@ case $arg in
 --lint-flake8) lint_flake8 ;;
 --lint-hadolint) lint_hadolint ;;
 --lint-jsonlint) lint_jsonlint ;;
+--lint-manifest) lint_manifest ;;
 --lint-markdownlint) lint_markdownlint ;;
 --lint-pydocstyle) lint_pydocstyle ;;
 --lint-shellcheck) lint_shellcheck ;;

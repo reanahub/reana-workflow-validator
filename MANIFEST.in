@@ -1,0 +1,21 @@
+# This file is part of REANA.
+# Copyright (C) 2026 CERN.
+#
+# REANA is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
+
+include *.json
+include *.md
+include *.sh
+include *.txt
+include *.yaml
+include .editorconfig
+include .flake8
+include .prettierignore
+include .prettierrc.yaml
+include .yamllint.yaml
+include Dockerfile
+include LICENSE
+include pytest.ini
+recursive-include reana_workflow_validator *.py
+recursive-include tests *.py
