@@ -17,7 +17,7 @@ readme = open("README.md").read()
 
 install_requires = [
     # All workflow engines are needed to load and serialize every spec type.
-    "reana-commons[cwl,snakemake,yadage]>=0.95.0a22,<0.96.0",
+    "reana-commons[cwl,snakemake,yadage]>=0.95.0a24,<0.96.0",
 ]
 
 extras_require = {
