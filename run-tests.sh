@@ -75,6 +75,10 @@ lint_markdownlint() {
     markdownlint-cli2 "**/*.md"
 }
 
+lint_pydocstyle() {
+    pydocstyle reana_workflow_validator
+}
+
 lint_shellcheck() {
     find . -name "*.sh" -exec shellcheck {} \+
 }
@@ -96,6 +100,7 @@ all() {
     lint_flake8
     lint_hadolint
     lint_markdownlint
+    lint_pydocstyle
     lint_shellcheck
     lint_yamllint
     python_tests
@@ -114,6 +119,7 @@ help() {
     echo "  --lint-flake8        Check linting of Python files"
     echo "  --lint-hadolint      Check linting of Dockerfiles"
     echo "  --lint-markdownlint  Check linting of Markdown files"
+    echo "  --lint-pydocstyle    Check linting of Python docstrings"
     echo "  --lint-shellcheck    Check linting of shell scripts"
     echo "  --lint-yamllint      Check linting of YAML files"
     echo "  --python-tests       Run Python test suite"
@@ -136,6 +142,7 @@ case $arg in
 --lint-flake8) lint_flake8 ;;
 --lint-hadolint) lint_hadolint ;;
 --lint-markdownlint) lint_markdownlint ;;
+--lint-pydocstyle) lint_pydocstyle ;;
 --lint-shellcheck) lint_shellcheck ;;
 --lint-yamllint) lint_yamllint ;;
 --python-tests) python_tests ;;

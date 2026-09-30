@@ -126,6 +126,23 @@ jobs:
           npm install markdownlint-cli2 --global
           ./run-tests.sh --lint-markdownlint
 
+  lint-pydocstyle:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check compliance with Python docstring conventions
+        run: |
+          pip install --upgrade pip
+          pip install pydocstyle
+          ./run-tests.sh --lint-pydocstyle
+
   lint-shellcheck:
     runs-on: ubuntu-24.04
     steps:
