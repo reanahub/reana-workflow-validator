@@ -17,7 +17,13 @@ readme = open("README.md").read()
 
 install_requires = [
     # All workflow engines are needed to load and serialize every spec type.
-    "reana-commons[cwl,snakemake,yadage]>=0.95.0a24,<0.96.0",
+    "reana-commons[cwl,snakemake,yadage]>=0.95.0a26,<0.96.0",
+    # Pinning adage/packtivity/yadage/yadage-schemas to make sure we use compatible versions.
+    # See https://github.com/reanahub/reana-workflow-engine-yadage/pull/236#discussion_r992475484
+    "adage==0.11.0",  # matches the version in r-w-e-yadage and reana-server
+    "packtivity==0.17.1",  # matches the version in r-w-e-yadage and reana-server
+    "yadage==0.21.2",  # matches the version in r-w-e-yadage and reana-server
+    "yadage-schemas==0.11.1",  # matches the version in r-w-e-yadage and reana-server
 ]
 
 extras_require = {
